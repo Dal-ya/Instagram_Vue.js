@@ -1,2 +1,2 @@
-# Instagram_Vue.js
-instagram clone coding
+# Instagram_Vue.js(프론트만)
+배포 : https://hu2y.netlify.com/
