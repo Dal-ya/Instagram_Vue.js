@@ -20,6 +20,21 @@
         </filter-type>
       </div>
     </div>
+    <div v-if="step === 3">
+      <div class="selected-image"
+        :class="selectedFilter"
+        :style="{ backgroundImage: 'url(' + image + ')' }">
+      </div>
+      <div class="caption-container">
+        <textarea class="caption-input"
+          placeholder="Write a caption..."
+          type="text"
+          :value="value"
+          @input="$emit('input', $event.target.value)"
+        >
+        </textarea>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -29,7 +44,7 @@ import FilterType from './FilterType'
 
 export default {
   name: "PhoneBody",
-  props: ['posts','filters','step', 'image', 'selectedFilter'],
+  props: ['posts','filters','step', 'image', 'selectedFilter', 'value'],
   components: {
     VuegramPost,
     FilterType
