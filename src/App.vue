@@ -3,18 +3,11 @@
     <div class="app-phone">
       <div class="phone-header">
         <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1211695/vue_gram_logo_cp.png" />
-        <a class="cancel-cta"
-           v-if="step === 2 || step === 3" 
-           @click="goToHome">
-            Cancel
-        </a>
-        <a class="next-cta"
-           v-if="step === 2"
-           @click="step++">
-            Next
-        </a>
+        <a class="cancel-cta" v-if="step === 2 || step === 3" @click="goToHome">Cancel</a>
+        <a class="next-cta" v-if="step === 2" @click="step++">Next</a>
+        <a class="next-cta" v-if="step === 3" @click="sharePost">Share</a>
       </div>
-      <phone-body 
+      <phone-body
         :posts="posts"
         :step="step"
         :filters="filters"
@@ -27,7 +20,8 @@
           <i class="fas fa-home fa-lg"></i>
         </div>
         <div class="upload-cta">
-          <input type="file"
+          <input
+            type="file"
             name="file"
             id="file"
             class="inputfile"
@@ -45,12 +39,11 @@
 
 <script>
 import PhoneBody from "./components/PhoneBody";
-import posts from './js/posts'
-import filters from './js/filters'
+import posts from "./js/posts";
+import filters from "./js/filters";
 import EventBus from "./js/event-bus";
 
-
- /* eslint-disable */
+/* eslint-disable */
 export default {
   name: "App",
   data() {
@@ -65,7 +58,7 @@ export default {
   },
   created() {
     EventBus.$on("filter-selected", evt => {
-      console.log(evt)
+      console.log(evt);
       this.selectedFilter = evt.filter;
     });
   },
@@ -73,7 +66,7 @@ export default {
     PhoneBody
   },
   methods: {
-    uploadImage(evt) { 
+    uploadImage(evt) {
       const files = evt.target.files;
       if (!files.length) return;
       const reader = new FileReader();
@@ -91,6 +84,19 @@ export default {
       this.selectedFilter = "";
       this.caption = "";
       this.step = 1;
+    },
+    sharePost() { // 사진, 캡션 업로드 하는곳
+      const post = {
+        username: "Huey",
+        userImage:
+          "https://i.imgur.com/JqI4fpo.jpg",
+        postImage: this.image,
+        likes: 0,
+        caption: this.caption,
+        filter: this.filterType
+      };
+      this.posts.unshift(post);
+      this.goToHome();
     }
   }
 };
